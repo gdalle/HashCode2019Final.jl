@@ -1,7 +1,9 @@
 using HashCode2019Final
 using Documenter
 
-DocMeta.setdocmeta!(HashCode2019Final, :DocTestSetup, :(using HashCode2019Final); recursive=true)
+DocMeta.setdocmeta!(
+    HashCode2019Final, :DocTestSetup, :(using HashCode2019Final); recursive=true
+)
 
 makedocs(;
     modules=[HashCode2019Final],
@@ -14,12 +16,7 @@ makedocs(;
         edit_link="main",
         assets=String[],
     ),
-    pages=[
-        "Home" => "index.md",
-    ],
+    pages=["Home" => "index.md"],
 )
 
-deploydocs(;
-    repo="github.com/gdalle/HashCode2019Final.jl",
-    devbranch="main",
-)
+deploydocs(; repo="github.com/gdalle/HashCode2019Final.jl", devbranch="main")
