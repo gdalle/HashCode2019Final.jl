@@ -16,8 +16,5 @@ ENV["DATADEPS_ALWAYS_ACCEPT"] = "true"
             read(f, String)
         end
         @test instance_str == instance_str_ref
-
-        solution = trivial_solution(instance)
-        solution_str = String(solution)
     end
 end

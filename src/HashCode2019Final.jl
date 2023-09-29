@@ -7,7 +7,6 @@ export read_solution, write_solution
 export download_and_read_instance
 export INSTANCES
 export CompiledFile, TargetFile, Instance, CompilationStep, Solution
-export trivial_solution
 
 const INSTANCES = [
     "a_example.in",
@@ -20,6 +19,7 @@ const INSTANCES = [
 
 include("types.jl")
 include("read_write.jl")
+include("check.jl")
 include("solve.jl")
 
 function __init__()

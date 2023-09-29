@@ -30,8 +30,8 @@ function read_instance(path::String)
         n = parse(Int, l[1])
         dependencies = l[2:end]
 
-        cf = CompiledFile(name, c, r, dependencies)
-        compiled_files[i] = cf
+        compiled_file = CompiledFile(name, c, r, dependencies)
+        compiled_files[i] = compiled_file
     end
 
     for i in 1:T
@@ -41,8 +41,8 @@ function read_instance(path::String)
         d = parse(Int, l[2])
         g = parse(Int, l[3])
 
-        tf = TargetFile(name, d, g)
-        target_files[i] = tf
+        target_file = TargetFile(name, d, g)
+        target_files[i] = target_file
     end
 
     instance = Instance(S, compiled_files, target_files)
@@ -54,18 +54,20 @@ function Base.String(instance::Instance)
     T = length(instance.target_files)
     s = "$C $T $(instance.S)"
     for i in 1:C
-        cf = instance.compiled_files[i]
-        n = length(cf.dependencies)
+        compiled_file = instance.compiled_files[i]
+        (; name, c, r, dependencies) = compiled_file
+        n = length(dependencies)
         if n > 0
-            deps = join(cf.dependencies, " ")
-            s *= "\n$(cf.name) $(cf.c) $(cf.r)\n$n $deps"
+            dependencies_joined = join(dependencies, " ")
+            s *= "\n$name $c $r\n$n $dependencies_joined"
         else
-            s *= "\n$(cf.name) $(cf.c) $(cf.r)\n$n"
+            s *= "\n$name $c $r\n$n"
         end
     end
     for i in 1:T
-        tf = instance.target_files[i]
-        s *= "\n$(tf.name) $(tf.d) $(tf.g)"
+        target_file = instance.target_files[i]
+        (; name, d, g) = target_file
+        s *= "\n$name $d $g"
     end
     s *= "\n"
     return s
